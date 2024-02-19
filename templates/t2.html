@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>Change pounds into kilograms</h1>
+  <p>This program demonstrates how data can be sent from a
+      web interface (HTML page) to a Flask backend using JavaScript.
+      This is more complex than using a HTML form. However, sending and
+  receiving data using JavaScript is more flexible and allows the program to send data when a
+  wide range of events occur. So for example this same code could be modified to respond to
+      an event such as mouse movement.
+      In comparison, using HTML forms are very limited and requires the user to click a submit
+      button.
+      The technique of using JavaScript allows the front end (the web page)
+      to send and receive data and do minimal processing, while the backend (the Flask application)
+      to do the processing. In this example the Python code in the Flask application calculates
+      the number of kilograms for a given number of pounds. It would also be possible for
+      the Python application to perform the calculations for a game and have the web page simply
+      send and receive the users data/moves and then to display the results.
+  </p>
+  <p>
+      There are a number of ways HTML can be used to send and receive data to a webserver. In
+      this example the 'fetch' functionality is used. More specifically the fetch functionality
+      is used inside an 'async' function. Within the async function several 'await' functions are used
+      to send and receive the data from the web server.
+  </p>
+  <br>
+    Enter your weight in pounds: <input type="text" id="fname">
+  <br>
+  <p id="d3">Your weight in kg's is: </p>
+  <p id="d2"></p>
+
+  <script>
+
+   document.getElementById("fname").addEventListener("change", myFunction);
+
+   function myFunction() {
+     var x = document.getElementById("fname").value;
+     myffunc2(x);
+   }
+
+   const myffunc2 = async (x) => {
+        const response = await fetch('/p2k', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(x)
+      });
+      const data = await response.json();
+      document.getElementById("d2").innerHTML = JSON.stringify(data['Weight']);
+   };
+
+  </script>
+</body>
+</html>
